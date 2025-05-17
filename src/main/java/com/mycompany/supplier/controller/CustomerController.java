@@ -2,17 +2,16 @@ package com.mycompany.supplier.controller;
 
 import com.mycompany.supplier.entity.CustomerEntity;
 import com.mycompany.supplier.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
@@ -21,6 +20,12 @@ public class CustomerController {
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPPLIER')")
     public ResponseEntity<List<CustomerEntity>> getAllCustomers() {
         return ResponseEntity.ok(customerService.getAllCustomers());
+    }
+
+    @PreAuthorize("hasRole('ADMIN','SUPPLIER')")
+    @PostMapping("/add")
+    public ResponseEntity<CustomerEntity> addSupplier(@Valid @RequestBody CustomerEntity customer){
+        return customerService.addCustomer(customer);
     }
 
 }
