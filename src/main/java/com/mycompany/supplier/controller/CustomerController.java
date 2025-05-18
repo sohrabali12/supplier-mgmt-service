@@ -22,7 +22,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getAllCustomers());
     }
 
-    @PreAuthorize("hasRole('ADMIN','SUPPLIER')")
+    @PreAuthorize("hasAnyRole('ADMIN','SUPPLIER')")
     @PostMapping("/add")
     public ResponseEntity<CustomerEntity> addSupplier(@Valid @RequestBody CustomerEntity customer){
         return customerService.addCustomer(customer);

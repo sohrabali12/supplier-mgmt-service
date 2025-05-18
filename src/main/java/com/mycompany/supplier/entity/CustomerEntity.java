@@ -24,8 +24,4 @@ public class CustomerEntity {
     private String phone;
     private String address;
 
-
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<OrderEntity> orders;
 }
